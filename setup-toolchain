@@ -6,7 +6,8 @@ libmpfr-dev \
 libmpc-dev \
 texinfo \
 bison \ 
-flex
+flex \
+libfuse-dev
 "
 
 function print() {
@@ -60,6 +61,7 @@ function install_tup() {
 	cd ../
 	rm -rf tup
 	cd $BUILD_ROOT
+	tup init
 }
 
 function setup_toolchain_folder() {
@@ -76,6 +78,6 @@ sudo -v
 #install_dependencies	
 #setup_toolchain_folder
 #install_binutils
-install_gcc
-#install_tup
+#install_gcc
+install_tup
 exit
