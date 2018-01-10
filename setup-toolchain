@@ -1,0 +1,81 @@
+#!/bin/bash
+
+DEPS=" \
+libgmp3-dev \
+libmpfr-dev \
+libmpc-dev \
+texinfo \
+bison \ 
+flex
+"
+
+function print() {
+	echo -e $1
+}
+
+function print_error() {
+	echo -e "ERROR: " $1
+}
+
+function install_dependencies() {
+	sudo apt install -y $DEPS
+}
+
+function install_gcc() {
+	cd $PREFIX
+	git clone -b gcc-5_4_0-release --depth 1 https://github.com/gcc-mirror/gcc.git
+	mkdir tmp
+	cd tmp
+	../gcc/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --enable-languages=c,c++ --without-headers
+	make all-gcc -j$(nproc)
+	make all-target-libgcc -j$(nproc)
+	make install-gcc
+	make install-target-libgcc
+	cd ../
+	rm -rf tmp
+	rm -rf gcc
+	cd $BUILD_ROOT
+}
+
+function install_binutils() {
+	cd $PREFIX
+	git clone git://sourceware.org/git/binutils-gdb.git	
+	mkdir tmp
+	cd tmp
+	../binutils-gdb/configure --target=$TARGET --prefix="$PREFIX" --with-sysroot --disable-nls --disable-werror
+	make -j$(nproc)
+	make install
+	cd ../
+	rm -rf binutils-gdb
+	rm -rf tmp
+	cd $BUILD_ROOT	
+}
+
+function install_tup() {
+   	cd $PREFIX
+    git clone git://github.com/gittup/tup.git
+	cd tup
+	./bootstrap.sh
+	mv tup $PREFIX/bin/
+	cd ../
+	rm -rf tup
+	cd $BUILD_ROOT
+}
+
+function setup_toolchain_folder() {
+	mkdir -p toolchain
+}
+
+if [ -z "$reyOS" ]; then
+	print_error "Did you source the env file?"
+	exit 1
+fi;
+
+sudo -v
+
+#install_dependencies	
+#setup_toolchain_folder
+#install_binutils
+install_gcc
+#install_tup
+exit
