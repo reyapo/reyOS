@@ -1,0 +1,5 @@
+include_rules
+
+: boot.asm |> !nasm -felf32 %f -o %o |> %B.o
+: crti.asm |> !nasm -felf32 %f -o %o |> %B.o
+: crtn.asm |> !nasm -felf32 %f -o %o |> %B.o

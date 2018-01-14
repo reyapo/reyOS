@@ -1,0 +1,13 @@
+export reyOS
+export BUILD_ROOT
+export PREFIX
+export TARGET
+export PATH
+export ARCH
+export CC
+export CPP
+
+export include
+
+!cpp = |> ^ CPP %f^ $CPP |>
+!nasm = |> ^ nasm %f^ nasm |>

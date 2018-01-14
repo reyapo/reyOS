@@ -7,7 +7,11 @@ libmpc-dev \
 texinfo \
 bison \ 
 flex \
-libfuse-dev
+libfuse-dev \
+xorriso \ 
+mtools \
+qemu \ 
+grub-pc-bin
 "
 
 function print() {
@@ -64,6 +68,21 @@ function install_tup() {
 	tup init
 }
 
+function install_nasm() {
+	cd $PREFIX 
+	mkdir nasm
+	cd nasm
+	wget http://www.nasm.us/pub/nasm/releasebuilds/2.13.02/nasm-2.13.02.tar.gz
+	tar xf nasm-2.13.02.tar.gz
+	cd nasm-2.13.02
+	./configure --target=$TARGET --prefix="$PREFIX"
+	make
+	make install
+	cd ../../
+	rm -rf nasm
+	cd $BUILD_ROOT
+}
+
 function setup_toolchain_folder() {
 	mkdir -p toolchain
 }
@@ -79,5 +98,6 @@ sudo -v
 #setup_toolchain_folder
 #install_binutils
 #install_gcc
-install_tup
+#install_tup
+# install_nasm
 exit

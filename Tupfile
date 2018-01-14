@@ -1,0 +1,5 @@
+include_rules
+	
+# : kernel/reyOS.bin |> cp %f %o |> isodir/boot/reyOS.bin
+# : grub/grub.cfg |> cp %f %o |> isodir/boot/grub/grub.cfg
+# : isodir isodir/boot/reyOS.bin isodir/boot/grub/grub.cfg |> ^ grub %o^ grub-mkrescue -o %o isodir |> reyOS.iso
