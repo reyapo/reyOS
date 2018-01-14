@@ -1,0 +1,47 @@
+include_rules
+
+CPPFLAGS  =--std=c++14
+CPPFLAGS +=-O21
+CPPFLAGS +=-g
+CPPFLAGS +=-ffreestanding
+CPPFLAGS +=-Wall
+CPPFLAGS +=-Wextra
+
+LIBS  = -I$BUILD_ROOT/kernel/include
+LIBS += -I$BUILD_ROOT/kernel/include/libc
+
+# TODO: Optimise compiling without specifiing each file
+
+: kernel/kernel.cpp |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_kernel $(LIBS) |> kernel/%B.o ../<kernel>
+
+: libc/stdio/printf.cpp   |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/stdio/%B.libk.o  {libk}
+: libc/stdio/putchar.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/stdio/%B.libk.o  {libk}
+: libc/stdio/puts.cpp     |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/stdio/%B.libk.o  {libk}
+: libc/stdlib/abort.cpp   |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/stdlib/%B.libk.o {libk}
+: libc/string/memcmp.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/string/%B.libk.o {libk}
+: libc/string/memcpy.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/string/%B.libk.o {libk}
+: libc/string/memmove.cpp |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/string/%B.libk.o {libk}
+: libc/string/memset.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/string/%B.libk.o {libk}
+: libc/string/strlen.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/string/%B.libk.o {libk}
+: {libk} |> i686-elf-ar rcs %f |> libk.a
+
+#$(AR) rcs $@ $(LIBK_OBJS)
+
+# FREEOBJS=\
+# $(ARCH_FREEOBJS) \
+# stdio/printf.o \
+# stdio/putchar.o \
+# stdio/puts.o \
+# stdlib/abort.o \
+# string/memcmp.o \
+# string/memcpy.o \
+# string/memmove.o \
+# string/memset.o \
+# string/strlen.o \
+
+# LIBK_OBJS=$(FREEOBJS:.o=.libk.o)
+
+# .c.libk.o:
+	# $(CC) -MD -c $< -o $@ -std=gnu11 $(LIBK_CFLAGS) $(LIBK_CPPFLAGS)
+
+# CFLAGS:=$(CFLAGS) -ffreestanding -Wall -Wextra -D__is_libk
