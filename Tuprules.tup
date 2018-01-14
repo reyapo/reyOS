@@ -6,8 +6,11 @@ export PATH
 export ARCH
 export CC
 export CPP
+export AR
 
 export include
 
 !cpp = |> ^ CPP %f^ $CPP |>
+!cc = |> ^ CC %f^ $CC |>
 !nasm = |> ^ nasm %f^ nasm |>
+!ar = |> ^ AR %f^ $AR |>

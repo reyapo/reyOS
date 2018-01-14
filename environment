@@ -9,5 +9,6 @@ export PATH="$PREFIX/bin:$PATH"
 export ARCH=$TARGET
 export CC="$TARGET-gcc"
 export CPP="$TARGET-g++"
+export AR="$TARGET-ar"
 
 export include="kernel/arch/i386"
