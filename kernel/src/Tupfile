@@ -10,17 +10,12 @@ CPPFLAGS +=-Wextra
 LIBS  = -I$BUILD_ROOT/kernel/include
 LIBS += -I$BUILD_ROOT/kernel/include/libc
 
-# TODO: Optimise compiling without specifiing each file
+# TODO: Optimise compiling without specifying each file
 
+
+: foreach libc/stdio/*.cpp   |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS)   |> libc/stdio/%B.libk.o  {libk}
+: foreach libc/stdlib/*.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS)   |> libc/stdlib/%B.libk.o {libk}
+: foreach libc/string/*.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS)   |> libc/string/%B.libk.o {libk}
+
+: {libk}            |> !ar rcs %o %f                                      |> libk.a      ../<kernel>
 : kernel/kernel.cpp |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_kernel $(LIBS) |> kernel/%B.o ../<kernel>
-
-: libc/stdio/printf.cpp   |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/stdio/%B.libk.o  {libk}
-: libc/stdio/putchar.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/stdio/%B.libk.o  {libk}
-: libc/stdio/puts.cpp     |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/stdio/%B.libk.o  {libk}
-: libc/stdlib/abort.cpp   |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/stdlib/%B.libk.o {libk}
-: libc/string/memcmp.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/string/%B.libk.o {libk}
-: libc/string/memcpy.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/string/%B.libk.o {libk}
-: libc/string/memmove.cpp |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/string/%B.libk.o {libk}
-: libc/string/memset.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/string/%B.libk.o {libk}
-: libc/string/strlen.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/string/%B.libk.o {libk}
-: {libk} |> !ar rcs %o %f |> libk.a

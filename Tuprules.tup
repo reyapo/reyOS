@@ -5,6 +5,10 @@ export PATH
 
 include config
 
+ifeq ($(TARGET),)
+error "Please set a target architecture in the config file"
+endif
+
 CC  = "$(TARGET)-elf-gcc"
 CPP = "$(TARGET)-elf-g++"
 AR  = "$(TARGET)-elf-ar"

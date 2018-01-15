@@ -1,6 +1,5 @@
 include_rules
 
-# TODO: Make every $(ARCH) dynamic, this will make sure future architectures are supported.
 ARCH_OBJ  = arch/$(ARCH)/boot.o
 ARCH_OBJ += arch/$(ARCH)/tty.o
 
@@ -10,22 +9,7 @@ CPPFLAGS += -ffreestanding
 CPPFLAGS += -Wall 
 CPPFLAGS += -Wextra
 
-FLAGS  = -nostdlib 
-FLAGS += -lk 
-FLAGS += -lgcc
-FLAGS += -Lsrc
+LFLAGS  = -nostdlib 
+LFLAGS += -lgcc
 
-START  = arch/$(ARCH)/crti.o
-START += arch/$(ARCH)/crtbegin.o
-OBJ += $(ARCH_OBJ)
-OBJ += $(KERNEL_OBJ)
-OBJ += $(LIBK_OBJ)
-END += arch/$(ARCH)/crtend.o
-END += arch/$(ARCH)/crtn.o
-
-: arch/$(ARCH)/linker.ld src/libk.a <kernel> $(OBJ) $(START) $(END) |> !cpp -T arch/$(ARCH)/linker.ld -o %o $(CPPFLAGS) $(START) $(OBJ) %<kernel> $(FLAGS) $(END) |> reyOS.kernel
-
-# myos.kernel: $(OBJS) $(ARCHDIR)/linker.ld
-# 	$(CC) -T $(ARCHDIR)/linker.ld -o $@ $(CFLAGS) $(LINK_LIST)
-# 	grub-file --is-x86-multiboot myos.kernel
-#  	
+: arch/$(ARCH)/linker.ld <kernel> |> !cpp -T arch/$(ARCH)/linker.ld -o %o $(CPPFLAGS) %<kernel> $(LFLAGS) |> reyOS.kernel
