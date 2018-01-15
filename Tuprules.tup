@@ -1,16 +1,22 @@
 export reyOS
 export BUILD_ROOT
 export PREFIX
-export TARGET
 export PATH
-export ARCH
-export CC
-export CPP
-export AR
 
-export include
+include config
 
-!cpp = |> ^ CPP %o^ $CPP |>
-!cc = |> ^ CC %o^ $CC |>
+CC  = "$(TARGET)-elf-gcc"
+CPP = "$(TARGET)-elf-g++"
+AR  = "$(TARGET)-elf-ar"
+
+ARCH=$(TARGET)
+
+ifeq ($(TARGET),i686)
+ARCH=i386
+endif
+
+!cpp  = |> ^ CPP %o^ $(CPP) |>
+!cc   = |> ^ CC %o^ $(CC) |>
 !nasm = |> ^ nasm %o^ nasm |>
-!ar = |> ^ AR %o^ $AR |>
+!ar   = |> ^ AR %o^ $(AR) |>
+

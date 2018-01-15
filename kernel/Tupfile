@@ -1,8 +1,8 @@
 include_rules
 
-# TODO: Make every i386 dynamic, this will make sure future architectures are supported.
-ARCH_OBJ  = arch/i386/boot.o
-ARCH_OBJ += arch/i386/tty.o
+# TODO: Make every $(ARCH) dynamic, this will make sure future architectures are supported.
+ARCH_OBJ  = arch/$(ARCH)/boot.o
+ARCH_OBJ += arch/$(ARCH)/tty.o
 
 CPPFLAGS  = -O2
 CPPFLAGS += -g 
@@ -15,15 +15,15 @@ FLAGS += -lk
 FLAGS += -lgcc
 FLAGS += -Lsrc
 
-START  = arch/i386/crti.o
-START += arch/i386/crtbegin.o
+START  = arch/$(ARCH)/crti.o
+START += arch/$(ARCH)/crtbegin.o
 OBJ += $(ARCH_OBJ)
 OBJ += $(KERNEL_OBJ)
 OBJ += $(LIBK_OBJ)
-END += arch/i386/crtend.o
-END += arch/i386/crtn.o
+END += arch/$(ARCH)/crtend.o
+END += arch/$(ARCH)/crtn.o
 
-: arch/i386/linker.ld src/libk.a <kernel> $(OBJ) $(START) $(END) |> !cpp -T arch/i386/linker.ld -o %o $(CPPFLAGS) $(START) $(OBJ) %<kernel> $(FLAGS) $(END) |> reyOS.kernel
+: arch/$(ARCH)/linker.ld src/libk.a <kernel> $(OBJ) $(START) $(END) |> !cpp -T arch/$(ARCH)/linker.ld -o %o $(CPPFLAGS) $(START) $(OBJ) %<kernel> $(FLAGS) $(END) |> reyOS.kernel
 
 # myos.kernel: $(OBJS) $(ARCHDIR)/linker.ld
 # 	$(CC) -T $(ARCHDIR)/linker.ld -o $@ $(CFLAGS) $(LINK_LIST)

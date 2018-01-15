@@ -3,12 +3,4 @@ export reyOS="1"
 export BUILD_ROOT=`pwd`
 
 export PREFIX="$BUILD_ROOT/toolchain"
-export TARGET=i686-elf
 export PATH="$PREFIX/bin:$PATH"
-
-export ARCH=$TARGET
-export CC="$TARGET-gcc"
-export CPP="$TARGET-g++"
-export AR="$TARGET-ar"
-
-export include="kernel/arch/i386"

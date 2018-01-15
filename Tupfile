@@ -6,5 +6,5 @@ menuentry "reyOS" {\n\
 }"
 
 : kernel/reyOS.kernel |> cp %f %o |> isodir/boot/reyOS.kernel
-: |> echo $(GRUB) > %o |> isodir/boot/grub/grub.cfg
-: isodir isodir/boot/reyOS.kernel isodir/boot/grub/grub.cfg |> ^ grub %o^ grub-mkrescue -o %o isodir |> reyOS.iso
+: |> ^ make grub.cfg^ echo $(GRUB) > %o |> isodir/boot/grub/grub.cfg
+: isodir isodir/boot/reyOS.kernel isodir/boot/grub/grub.cfg |> ^ grub %o^ grub-mkrescue -o %o isodir 2> /dev/null |> reyOS.iso
