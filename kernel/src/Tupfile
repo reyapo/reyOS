@@ -23,25 +23,4 @@ LIBS += -I$BUILD_ROOT/kernel/include/libc
 : libc/string/memmove.cpp |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/string/%B.libk.o {libk}
 : libc/string/memset.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/string/%B.libk.o {libk}
 : libc/string/strlen.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS) |> libc/string/%B.libk.o {libk}
-: {libk} |> i686-elf-ar rcs %f |> libk.a
-
-#$(AR) rcs $@ $(LIBK_OBJS)
-
-# FREEOBJS=\
-# $(ARCH_FREEOBJS) \
-# stdio/printf.o \
-# stdio/putchar.o \
-# stdio/puts.o \
-# stdlib/abort.o \
-# string/memcmp.o \
-# string/memcpy.o \
-# string/memmove.o \
-# string/memset.o \
-# string/strlen.o \
-
-# LIBK_OBJS=$(FREEOBJS:.o=.libk.o)
-
-# .c.libk.o:
-	# $(CC) -MD -c $< -o $@ -std=gnu11 $(LIBK_CFLAGS) $(LIBK_CPPFLAGS)
-
-# CFLAGS:=$(CFLAGS) -ffreestanding -Wall -Wextra -D__is_libk
+: {libk} |> !ar rcs %o %f |> libk.a

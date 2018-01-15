@@ -33,4 +33,6 @@
 
 toolchain/*
 .tup/*
-isodir/*	
+isodir/*
+*.kernel
+*.iso

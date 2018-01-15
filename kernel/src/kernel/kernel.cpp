@@ -2,7 +2,9 @@
  
 #include <kernel/tty.h>
  
+extern "C" {
 void kernel_main(void) {
 	kernel::terminal_initialize();
-	libc::printf("Hello, kernel World!\n");
+	libc::printf("Booting reyOS!\n");
+}
 }

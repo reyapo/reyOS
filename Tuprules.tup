@@ -10,7 +10,7 @@ export AR
 
 export include
 
-!cpp = |> ^ CPP %f^ $CPP |>
-!cc = |> ^ CC %f^ $CC |>
-!nasm = |> ^ nasm %f^ nasm |>
-!ar = |> ^ AR %f^ $AR |>
+!cpp = |> ^ CPP %o^ $CPP |>
+!cc = |> ^ CC %o^ $CC |>
+!nasm = |> ^ nasm %o^ nasm |>
+!ar = |> ^ AR %o^ $AR |>
