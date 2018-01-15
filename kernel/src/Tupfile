@@ -1,7 +1,7 @@
 include_rules
 
 CPPFLAGS  =--std=c++14
-CPPFLAGS +=-O21
+CPPFLAGS +=-O2
 CPPFLAGS +=-g
 CPPFLAGS +=-ffreestanding
 CPPFLAGS +=-Wall
@@ -16,6 +16,6 @@ LIBS += -I$BUILD_ROOT/kernel/include/libc
 : foreach libc/stdio/*.cpp   |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS)   |> libc/stdio/%B.libk.o  {libk}
 : foreach libc/stdlib/*.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS)   |> libc/stdlib/%B.libk.o {libk}
 : foreach libc/string/*.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS)   |> libc/string/%B.libk.o {libk}
+: {libk}                     |> !ar rcs %o %f                                      |> libk.a ../<kernel_libk>
 
-: {libk}            |> !ar rcs %o %f                                      |> libk.a      ../<kernel>
 : kernel/kernel.cpp |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_kernel $(LIBS) |> kernel/%B.o ../<kernel>

@@ -1,15 +1,13 @@
 include_rules
 
-ARCH_OBJ  = arch/$(ARCH)/boot.o
-ARCH_OBJ += arch/$(ARCH)/tty.o
-
 CPPFLAGS  = -O2
-CPPFLAGS += -g 
-CPPFLAGS += -ffreestanding 
-CPPFLAGS += -Wall 
+CPPFLAGS += -g
+CPPFLAGS += -ffreestanding
+CPPFLAGS += -Wall
 CPPFLAGS += -Wextra
 
-LFLAGS  = -nostdlib 
+LFLAGS  = -nostdlib
 LFLAGS += -lgcc
 
-: arch/$(ARCH)/linker.ld <kernel> |> !cpp -T arch/$(ARCH)/linker.ld -o %o $(CPPFLAGS) %<kernel> $(LFLAGS) |> reyOS.kernel
+: arch/$(ARCH)/linker.ld <kernel_begin> <kernel> <kernel_libk> <kernel_arch> <kernel_end> \
+  |> !cpp -T arch/$(ARCH)/linker.ld -o %o $(CPPFLAGS) %<kernel_begin>  %<kernel_arch>  %<kernel> %<kernel_libk> $(LFLAGS) %<kernel_end>  |> reyOS.kernel

@@ -1,7 +1,7 @@
 include_rules
 
 CPPFLAGS  = --std=c++14
-CPPFLAGS += -O2 
+CPPFLAGS += -O2
 CPPFLAGS += -g
 CPPFLAGS += -ffreestanding
 CPPFLAGS += -Wall
@@ -11,8 +11,11 @@ CPPFLAGS += -D__is_kernel
 LIB  = -I${BUILD_ROOT}/kernel/include
 LIB += -I${BUILD_ROOT}/kernel/include/libc
 
-: boot.asm |> !nasm -felf32 %f -o %o |> %B.o ../../<kernel>
-: crti.asm |> !nasm -felf32 %f -o %o |> %B.o ../../<kernel>
-: crtn.asm |> !nasm -felf32 %f -o %o |> %B.o ../../<kernel>
-: tty.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) $(LIB) |> tty.o ../../<kernel>
-: |> OBJ=`i686-elf-g++ -print-file-name=$((@F)` && cp $OBJ/crtbegin.o $OBJ/crtend.o . |> crtbegin.o crtend.o ../../<kernel>
+: boot.asm |> !nasm -felf32 %f -o %o |> %B.o ../../<kernel_arch>
+: tty.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) $(LIB) |> tty.o ../../<kernel_arch>
+
+: crti.asm |> !nasm -felf32 %f -o %o |> %B.o ../../<kernel_begin>
+: |> OBJ=`i686-elf-g++ -print-file-name=$((@F)` && cp $OBJ/crtbegin.o . |> crtbegin.o ../../<kernel_begin>
+
+: crtn.asm |> !nasm -felf32 %f -o %o |> %B.o ../../<kernel_end>
+: |> OBJ=`i686-elf-g++ -print-file-name=$((@F)` && cp $OBJ/crtend.o . |> crtend.o ../../<kernel_end>
