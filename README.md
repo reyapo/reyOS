@@ -1,6 +1,6 @@
 # reyOS
 
-reyOS is for me to experiment with OS building. As of now I have little to no experience so don't take this to seriously :).
+reyOS is for me to experiment with OS building. As of now I have little to no experience so don't take this to seriously :). I am running Debian, so all is only tested and build on Debian.
 
 ## preperation
 
