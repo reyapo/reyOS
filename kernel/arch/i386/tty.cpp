@@ -10,14 +10,10 @@
 
 namespace kernel {
 
-Terminal tty;
-
 Terminal::Terminal() {//} : _VGA_MEMORY((uint16_t*)0xC00B8000) {
   _VGA_WIDTH  = 80;
   _VGA_HEIGHT = 25;
-}
 
-void Terminal::init() {
   _row = 0;
   _column = 0;
   _color = vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
@@ -39,11 +35,19 @@ void Terminal::putentryat(unsigned char c, uint8_t color, size_t x, size_t y) {
 }
 
 void Terminal::putchar(char c) {
-  unsigned char uc = c;
-  putentryat(uc, _color, _column, _row);
+  if (c == '\n') {
+    _column = 0;
+    goto row;
+  }
+
+  {
+    unsigned char uc = c;
+    putentryat(uc, _color, _column, _row);
+  }
 
   if (++_column == _VGA_WIDTH) {
     _column = 0;
+row:
     if (++_row == _VGA_HEIGHT) _row = 0;
   }
 }
@@ -58,3 +62,5 @@ void Terminal::writestring(const char* data) {
   write(data, libc::strlen(data));
 }
 }
+
+kernel::Terminal *tty;

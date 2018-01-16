@@ -4,12 +4,16 @@
 #include <kernel/tty.h>
 #endif
 
+#ifdef __is_libk
+extern kernel::Terminal *tty;
+#endif
+
 namespace libc {
 
 int putchar(int ic) {
 #if defined(__is_libk)
   char c = (char)ic;
-  kernel::tty.write(&c, sizeof(c));
+  tty->write(&c, sizeof(c));
 #else
 // TODO: Implement stdio and the write system call.
 #endif

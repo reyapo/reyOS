@@ -19,18 +19,16 @@ private:
 
   void putentryat(unsigned char, uint8_t, size_t, size_t);
   void setcolor(uint8_t);
+  void putchar(char c);
+
+  bool escape = false;
 
 public:
   Terminal();
-  void putchar(char c);
   void write(const char* data, size_t size);
   void writestring(const char* data);
-  void init();
 };
 
-extern Terminal tty;
-
 }
-
 
 #endif

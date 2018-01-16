@@ -1,7 +1,12 @@
 #include <kernel/tty.h>
 #include <stdio.h>
 
+extern kernel::Terminal *tty;
+
 extern "C" void kernel_main(void) {
-  kernel::tty.init();
-  // libc::printf("Booting reyOS...\n"); // BROKEN
+  kernel::Terminal tty0;
+  tty = &tty0;
+
+  libc::printf("Booting reyOS....\n");
+  libc::printf("Booting reyOS....\n");
 }
