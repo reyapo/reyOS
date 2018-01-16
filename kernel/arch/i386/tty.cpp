@@ -35,9 +35,24 @@ void Terminal::putentryat(unsigned char c, uint8_t color, size_t x, size_t y) {
 }
 
 void Terminal::putchar(char c) {
+  if(esc) {
+    int r = c - 48;
+    if (r < 0 || r > 15) {
+      // not valid. print escaped sequence
+    }
+    _color = vga_entry_color((vga_color) r, VGA_COLOR_BLACK);
+    esc = false;
+    return;
+  }
+
   if (c == '\n') {
     _column = 0;
     goto row;
+  }
+
+  if(c == '/') {
+    esc = true;
+    return;
   }
 
   {

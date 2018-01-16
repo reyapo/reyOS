@@ -21,7 +21,7 @@ private:
   void setcolor(uint8_t);
   void putchar(char c);
 
-  bool escape = false;
+  bool esc = false;
 
 public:
   Terminal();

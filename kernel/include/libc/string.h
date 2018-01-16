@@ -13,6 +13,16 @@ void* memmove(void*, const void*, size_t);
 void* memset(void*, int, size_t);
 size_t strlen(const char*);
 
+class string {
+  private:
+    char* _data;
+  public:
+    string(const char*);
+
+    char* data();
+    int length();
+};
+
 }
 
 #endif
