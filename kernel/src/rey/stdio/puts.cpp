@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-namespace libc {
+namespace rey {
 
 int puts(const char* string) {
   return printf("%s\n", string); }

@@ -3,7 +3,7 @@
 
 #include <sys/cdefs.h>
 
-namespace libc {
+namespace rey {
 
 __attribute__((__noreturn__)) void abort(void);
 }

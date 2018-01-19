@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
-namespace libc {
+namespace rey {
 
 static bool print(const char* data, size_t length) {
   const unsigned char* bytes = (const unsigned char*) data;

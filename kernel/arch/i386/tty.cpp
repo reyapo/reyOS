@@ -74,7 +74,7 @@ void Terminal::write(const char* data, size_t size) {
 }
 
 void Terminal::writestring(const char* data) {
-  write(data, libc::strlen(data));
+  write(data, rey::strlen(data));
 }
 }
 

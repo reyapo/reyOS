@@ -1,6 +1,6 @@
 #include <string.h>
 
-namespace libc {
+namespace rey {
 
 void* memmove(void* dstptr, const void* srcptr, size_t size) {
   unsigned char* dst = (unsigned char*)dstptr;

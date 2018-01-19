@@ -1,6 +1,6 @@
 #include <string.h>
 
-namespace libc {
+namespace rey {
 
   string::string(const char *data) {
     memcpy(_data, data, strlen(data));

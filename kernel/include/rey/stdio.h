@@ -6,7 +6,7 @@
 
 #define EOF (-1)
 
-namespace libc {
+namespace rey {
 
 int printf(const char*, ...);
 int putchar(int);

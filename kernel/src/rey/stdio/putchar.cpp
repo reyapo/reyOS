@@ -8,7 +8,7 @@
 extern kernel::Terminal *tty;
 #endif
 
-namespace libc {
+namespace rey {
 
 int putchar(int ic) {
 #if defined(__is_libk)

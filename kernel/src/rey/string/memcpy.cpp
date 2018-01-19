@@ -1,6 +1,6 @@
 #include <string.h>
 
-namespace libc {
+namespace rey {
 
 // TODO: is restrict needed?
 // void* memcpy(void* restrict dstptr, const void* restrict srcptr, size_t size)

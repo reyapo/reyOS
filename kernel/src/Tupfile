@@ -8,14 +8,14 @@ CPPFLAGS +=-Wall
 CPPFLAGS +=-Wextra
 
 LIBS  = -I$BUILD_ROOT/kernel/include
-LIBS += -I$BUILD_ROOT/kernel/include/libc
+LIBS += -I$BUILD_ROOT/kernel/include/rey
 
 # TODO: Optimise compiling without specifying each file
 
 
-: foreach libc/stdio/*.cpp   |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS)   |> libc/stdio/%B.libk.o  {libk}
-: foreach libc/stdlib/*.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS)   |> libc/stdlib/%B.libk.o {libk}
-: foreach libc/string/*.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS)   |> libc/string/%B.libk.o {libk}
+: foreach rey/stdio/*.cpp   |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS)   |> rey/stdio/%B.libk.o  {libk}
+: foreach rey/stdlib/*.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS)   |> rey/stdlib/%B.libk.o {libk}
+: foreach rey/string/*.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_libk $(LIBS)   |> rey/string/%B.libk.o {libk}
 : {libk}                     |> !ar rcs %o %f                                      |> libk.a ../<kernel_libk>
 
 : kernel/kernel.cpp |> !cpp -c %f -o %o $(CPPFLAGS) -D__is_kernel $(LIBS) |> kernel/%B.o ../<kernel>

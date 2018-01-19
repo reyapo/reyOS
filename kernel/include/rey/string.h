@@ -5,7 +5,7 @@
 
 #include <stddef.h>
 
-namespace libc {
+namespace rey {
 
 int memcmp(const void*, const void*, size_t);
 void* memcpy(void* __restrict, const void* __restrict, size_t);

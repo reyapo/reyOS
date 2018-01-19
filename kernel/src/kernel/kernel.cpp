@@ -7,5 +7,6 @@ extern "C" void kernel_main(void) {
   kernel::Terminal tty0;
   tty = &tty0;
 
-  libc::stdout << "Booting /1rey/2OS/7" << "\n";
+  // escape characters prone to change. For now /1 means `change text color to 1 (BLUE)`
+  rey::stdout << "Booting /1rey/2OS/7" << "\n";
 }

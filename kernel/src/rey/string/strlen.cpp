@@ -1,6 +1,6 @@
 #include <string.h>
 
-namespace libc {
+namespace rey {
 
 size_t strlen(const char* str) {
   size_t len = 0;

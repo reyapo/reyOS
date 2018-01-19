@@ -3,12 +3,12 @@
 
 #include <stdio.h>
 
-namespace libc {
+namespace rey {
 
   class stream {
   public:
     friend stream& operator << (stream& me, const char *a) {
-      libc::printf(a);
+      rey::printf(a);
       return me;
     }
   };

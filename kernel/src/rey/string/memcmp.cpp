@@ -1,6 +1,6 @@
 #include <string.h>
 
-namespace libc {
+namespace rey {
 
 int memcmp(const void* aptr, const void* bptr, size_t size) {
   const unsigned char* a = (const unsigned char*)aptr;

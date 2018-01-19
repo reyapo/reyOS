@@ -9,7 +9,7 @@ CPPFLAGS += -Wextra
 CPPFLAGS += -D__is_kernel
 
 LIB  = -I${BUILD_ROOT}/kernel/include
-LIB += -I${BUILD_ROOT}/kernel/include/libc
+LIB += -I${BUILD_ROOT}/kernel/include/rey
 
 : boot.asm |> !nasm -felf32 %f -o %o |> %B.o ../../<kernel_arch>
 : tty.cpp  |> !cpp -c %f -o %o $(CPPFLAGS) $(LIB) |> tty.o ../../<kernel_arch>
