@@ -2,6 +2,7 @@
 #define STREAM_H
 
 #include <stdio.h>
+#include <convert.h>
 
 namespace rey {
 
@@ -11,9 +12,18 @@ namespace rey {
       rey::printf(a);
       return me;
     }
+
+    friend stream& operator << (stream& me, string a) {
+      rey::printf(a.data());
+      return me;
+    }
+
+    friend stream& operator << (stream& me, int n) {
+      return me << toString(&n);
+    }
   };
 
-  stream stdout;
+  stream print;
 
 }
 
