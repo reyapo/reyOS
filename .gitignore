@@ -14,3 +14,5 @@ toolchain/*
 isodir/*
 *.kernel
 *.iso
+
+.vscode/*
