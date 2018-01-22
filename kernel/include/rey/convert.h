@@ -14,8 +14,11 @@ namespace rey {
     }
 
     while(*n > 0) {
-      const char c = ((char) (*n % 10)) + 48;
-      result += c;
+      string t = "";
+      t += ((char) (*n % 10)) + 48;
+      t += result;
+      result = t;
+
       *n /= 10;
     }
 

@@ -9,22 +9,28 @@ namespace rey {
   class stream {
   public:
     friend stream& operator << (stream& me, const char *a) {
-      rey::printf(a);
+      string t(a);
+      print(t);
       return me;
     }
 
     friend stream& operator << (stream& me, string a) {
-      rey::printf(a.data());
+      print(a);
       return me;
     }
 
     friend stream& operator << (stream& me, int n) {
       return me << toString(&n);
     }
+
+    friend stream& operator << (stream& me, char c) {
+      print(c);
+      return me;
+    }
+
   };
 
-  stream print;
-
+  stream stdout;
 }
 
 #endif

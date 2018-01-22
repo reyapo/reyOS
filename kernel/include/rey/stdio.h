@@ -8,7 +8,8 @@
 
 namespace rey {
 
-int printf(const char*, ...);
+int print(string&);
+int print(char&);
 int putchar(int);
 int puts(const char*);
 
