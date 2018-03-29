@@ -2,11 +2,11 @@ global _boot                          ; Make entry point visible to linker.
 extern kernel_main                   ; _main is defined elsewhere
 
 ; setting up the Multiboot header - see GRUB docs for details
-MODULEALIGN equ  1<<0             ; align loaded modules on page boundaries
-MEMINFO     equ  1<<1             ; provide memory map
+MODULEALIGN equ  1 << 0             ; align loaded modules on page boundaries
+MEMINFO     equ  1 << 1             ; provide memory map
 FLAGS       equ  MODULEALIGN | MEMINFO  ; this is the Multiboot 'flag' field
-MAGIC       equ    0x1BADB002     ; 'magic number' lets bootloader find the header
-CHECKSUM    equ -(MAGIC + FLAGS)  ; checksum required
+MAGIC       equ  0x1BADB002     ; 'magic number' lets bootloader find the header
+CHECKSUM    equ  -(MAGIC + FLAGS)  ; checksum required
 
 ; This is the virtual base address of kernel space. It must be used to convert virtual
 ; addresses into physical addresses until paging is enabled. Note that this is not
@@ -14,7 +14,6 @@ CHECKSUM    equ -(MAGIC + FLAGS)  ; checksum required
 ; be subtracted from a virtual address to get a physical address.
 KERNEL_VIRTUAL_BASE equ 0xC0000000                  ; 3GB
 KERNEL_PAGE_NUMBER equ (KERNEL_VIRTUAL_BASE >> 22)  ; Page directory index of kernel's 4MB PTE.
-
 
 section .data
 align 0x1000
@@ -31,7 +30,6 @@ BootPageDirectory:
     ; This page directory entry defines a 4MB page containing the kernel.
     dd 0x00000083
     times (1024 - KERNEL_PAGE_NUMBER - 1) dd 0  ; Pages after the kernel image.
-
 
 section .text
 align 4
@@ -88,7 +86,6 @@ StartInHigherHalf:
 
     call  kernel_main            ; call kernel proper
     hlt                          ; halt machine should kernel return
-
 
 section .bss
 align 32
